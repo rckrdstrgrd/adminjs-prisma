@@ -22,7 +22,7 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prisma-v7-support') && github.event_name == 'push'
     permissions:
       contents: read
       packages: write
