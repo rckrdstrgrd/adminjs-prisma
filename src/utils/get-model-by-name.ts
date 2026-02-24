@@ -1,7 +1,8 @@
-import { Prisma } from '@prisma/client';
-
 export const getModelByName = (name: string, clientModule?: any) => {
-  const dmmf = clientModule?.Prisma.dmmf.datamodel ?? Prisma.dmmf.datamodel;
+  if (!clientModule?.Prisma?.dmmf) {
+    throw new Error('clientModule with Prisma.dmmf is required.');
+  }
+  const dmmf = clientModule.Prisma.dmmf.datamodel;
 
   const model = dmmf.models.find(({ name: modelName }) => modelName === name);
 

@@ -1,8 +1,10 @@
-import { Prisma } from '@prisma/client';
 import { Enums } from '../types.js';
 
 export const getEnums = (clientModule?: any): Enums => {
-  const dmmf = clientModule?.Prisma.dmmf.datamodel ?? Prisma.dmmf.datamodel;
+  if (!clientModule?.Prisma?.dmmf) {
+    throw new Error('clientModule with Prisma.dmmf is required.');
+  }
+  const dmmf = clientModule.Prisma.dmmf.datamodel;
 
   return dmmf.enums.reduce((memo, current) => {
     // eslint-disable-next-line no-param-reassign

@@ -2,17 +2,16 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-param-reassign */
 import { BaseResource, Filter, BaseRecord, flat } from 'adminjs';
-import { PrismaClient } from '@prisma/client';
-import { DMMF } from '@prisma/client/runtime/library.js';
+import type { DMMF } from '@prisma/client/runtime/client';
 
 import { Property } from './Property.js';
 import { lowerCase } from './utils/helpers.js';
-import { ModelManager, Enums } from './types.js';
+import { PrismaClientLike, ModelManager, Enums } from './types.js';
 import { convertFilter, convertParam } from './utils/converters.js';
 import { getEnums } from './utils/get-enums.js';
 
 export class Resource extends BaseResource {
-  protected client: PrismaClient;
+  protected client: PrismaClientLike;
 
   protected model: DMMF.Model;
 
@@ -26,7 +25,7 @@ export class Resource extends BaseResource {
 
   constructor(args: {
     model: DMMF.Model;
-    client: PrismaClient;
+    client: PrismaClientLike;
     clientModule?: any;
   }) {
     super(args);
@@ -197,7 +196,7 @@ export class Resource extends BaseResource {
 
   public static isAdapterFor(args: {
     model: DMMF.Model;
-    client: PrismaClient;
+    client: PrismaClientLike;
   }): boolean {
     const { model, client } = args;
 
